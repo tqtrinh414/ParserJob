@@ -3,7 +3,7 @@ from autocorrect import spell
 import re
 import nltk
 from nltk import word_tokenize
-
+import pandas as pd
 
 addv = {'vp':'vice president', 'hr': 'human resouce', 'r d': 'research'
             'qa': 'qa', 'qc':'qc', 'mgr':'manager', 'ceo':'ceo',
