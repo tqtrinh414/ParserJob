@@ -55,7 +55,6 @@ def get_unique(df, pattern_func, pattern_level):
         if (len(title.split(" ")) == 2 and flag): # title co 2 tu va khong trong pattern
             temp_title = title.split()
             dct[title] = (temp_title[0],temp_title[1])
-            cout += 1
     return dct
 
 
@@ -118,11 +117,11 @@ def input_pattern_level():
 
 
 def main():
-    #print (input_pattern_func())
-    #print (input_pattern_level())
+    patternFunc = input_pattern_func()
+    patternLevel = input_pattern_level()
 
     df = preprocessing()
-    dct = get_unique(df, PATTERN_FUNC, PATTERN_LEVEL)
+    dct = get_unique(df, patternFunc, patternLevel)
     get_result(df, dct)
 
 if __name__ == "__main__":
