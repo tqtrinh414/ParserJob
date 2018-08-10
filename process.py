@@ -7,13 +7,13 @@ import pandas as pd
 
 
 
-PATTERN_FUNC = {
+pattern_func = {
     "sales": ["sales", "account", "accounts", "business development"], 
     "finance": ["accounting", "finance"], 
     "it": ["programmer", "engineer", "developer", "tester", "it ", "web"],
     "marketing": ["marketing"]
 }
-PATTERN_LEVEL = {
+pattern_level = {
     "manager": ["manager", "assistant manager"],
     "directors": ["director", "associate director"]
 }
@@ -31,12 +31,11 @@ def preprocessing(path = "Sample_data.csv"):
     return(df)
 
 
-def get_unique(df, pattern_func, pattern_level):
+def get_unique(df):
     uni_title = set(list(df['Title']))
     dct = {}
     for title in uni_title:
         dct[title] = ["",""]
-    
     for title in uni_title:
         flag = 1
         for x in pattern_func:
@@ -51,14 +50,14 @@ def get_unique(df, pattern_func, pattern_level):
                 if title.find(yl) != -1:
                     dct[title][1] = x
                     flag = 0
-        
-        if (len(title.split(" ")) == 2 and flag): # title co 2 tu va khong trong pattern
+        if (len(title.split(" ")) == 2 and flag):
             temp_title = title.split()
             dct[title] = (temp_title[0],temp_title[1])
     return dct
 
 
-def get_result(df,dct):
+def get_result(df):
+    dct = get_unique(df)
     funcs = []
     levels = []
     for x in df['Title']:
@@ -78,50 +77,9 @@ def get_result(df,dct):
     df.to_csv("test.csv")
 
 
-def input_pattern_func():
-    dctPatFunc = {}
-    print ("input pattern cho function: ")
-    s = ""
-    while s != "0":
-        print ("function (nhap 0 de nhap function khac) ")
-        s = input()
-        s2 = ""
-        lst = []
-        while s != "0" and s2 != "0":
-            print ("keyword (nhap 0 de dung):")
-            s2 = input()
-            if s2 != "0":
-                lst.append(s2)
-        if s!= "0":
-            dctPatFunc[s] = lst
-    return dctPatFunc
-
-
-def input_pattern_level():
-    dctPatLevel = {}
-    print ("input pattern cho level: ")
-    s = ""
-    while s != "0":
-        print ("level (nhap 0 de nhap level khac) ")
-        s = input()
-        s2 = ""
-        lst = []
-        while s != "0" and s2 != "0":
-            print ("keyword (nhap 0 de dung):")
-            s2 = input()
-            if s2 != "0":
-                lst.append(s2)
-        if s!= "0":
-            dctPatLevel[s] = lst
-    return dctPatLevel
-
 
 def main():
-    patternFunc = input_pattern_func()
-    patternLevel = input_pattern_level()
-
     df = preprocessing()
-    dct = get_unique(df, patternFunc, patternLevel)
     get_result(df, dct)
 
 if __name__ == "__main__":
